@@ -10,3 +10,14 @@ class Users(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+class ProfileImages(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    image = models.ImageField(blank=True, null=True)
+
+    class Meta:
+        db_table = "ProfileImages"
+
+    def __str__(self):
+        return self.user
