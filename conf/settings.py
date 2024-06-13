@@ -40,7 +40,6 @@ INSTALLED_APPS = [
 
     # custom
     'conversation',
-    'social_app',
     'users',
 ]
 

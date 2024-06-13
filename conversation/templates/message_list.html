@@ -1,0 +1,21 @@
+
+
+{% extends 'base.html' %}
+<title>Home</title>
+
+{% block content %}
+    {% for message in sent_messages %}
+        {% if message.sender %}
+            {{ message.sender.username }}
+        {% elif message.receiver.username %}
+            {{ message.receiver.username }}
+        {% else %}
+            <h2>No messages yet</h2>
+        {% endif %}
+    {% endfor %}
+
+    {% for message in received_messages %}
+            {{ message.sender.username }}
+
+    {% endfor %}
+{% endblock content %}
