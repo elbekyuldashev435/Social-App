@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class Users(AbstractUser):
+    image = models.ImageField(upload_to='profile_images/', blank=True, null=True, default='default_user/user_img.png')
     bio = models.TextField(blank=True, null=True)
 
     class Meta:
@@ -10,14 +11,3 @@ class Users(AbstractUser):
 
     def __str__(self):
         return self.username
-
-
-class ProfileImages(models.Model):
-    user = models.ForeignKey(Users, on_delete=models.CASCADE)
-    image = models.ImageField(blank=True, null=True)
-
-    class Meta:
-        db_table = "ProfileImages"
-
-    def __str__(self):
-        return self.user

@@ -1,0 +1,10 @@
+
+
+{% extends 'base.html' %}
+<title>Home</title>
+
+{% block content %}
+    <a href="{% url 'conversation:inbox' %}"><button>Inbox messages</button></a>
+    <a href="{% url 'conversation:outbox' %}"><button>Outbox messages</button></a>
+    <a href="#"><button>Write message</button></a>
+{% endblock content %}

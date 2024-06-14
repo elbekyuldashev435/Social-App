@@ -1,0 +1,13 @@
+
+
+{% extends 'base.html' %}
+<title>Outbox Detail</title>
+{% block content %}
+    <h2>------------------------------</h2>
+    <img src="{{ message.receiver.contact_user.image.url }}" width="80px">
+    <h2>{{ message.receiver.name}}</h2>
+    <h2>------------------------------</h2>
+    <h3>You: {{ message.message }}</h3>
+    <h2>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</h2>
+    <h4>{{ message.sent_time }}</h4>
+{% endblock content %}

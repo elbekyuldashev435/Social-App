@@ -1,0 +1,14 @@
+
+
+{% extends 'base.html' %}
+<title>Inbox messages</title>
+{% block content %}
+    <h2>Received Messages</h2>
+    {% for inbox in inboxes %}
+        <h2>--------------------------</h2>
+        <a href=""><img src="{{ inbox.sender.image.url}}" width="80px"></a>
+        <h2>From: <a href="">{{ inbox.sender.username }}</a></h2>
+        <h4>{{ inbox.sent_time }}</h4>
+    {% endfor %}
+    <h2>--------------------------</h2>
+{% endblock content %}

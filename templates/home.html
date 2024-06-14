@@ -1,0 +1,22 @@
+
+
+{% extends 'base.html' %}
+<title>Home Page</title>
+{% block content %}
+    <h1>All Posts</h1>
+    <h2>------------------</h2>
+    {% for post in posts %}
+        <img src="{{ post.user.image.url }}" width="30px"> {{ post.user.username }}
+        <h2>-----------------------------</h2>
+        {% if post.post_image %}
+            <img src="{{ post.post_image.url }}">
+            <h3>{{ post.post_title }}</h3>
+        {% elif post.post_video %}
+            <video width="640" height="480" controls>
+                <source src="{{ post.post_video.url }}" type="video/mp4">
+            </video>
+        {% else %}
+            <h2><a href="">{{ post.post_title }}</a></h2>
+        {% endif %}
+    {% endfor %}
+{% endblock content %}

@@ -1,0 +1,14 @@
+
+
+{% extends 'base.html' %}
+<title>Outbox messages</title>
+{% block content %}
+    <h2>Sent Messages</h2>
+    {% for outbox in outboxes %}
+        <h2>--------------------------</h2>
+        <a href="{% url 'conversation:outbox-detail' outbox.pk%}"><img src="{{ outbox.receiver.contact_user.image.url }}" width="80px"></a>
+        <h2>To: <a href="{% url 'conversation:outbox-detail' outbox.pk%}">{{ outbox.receiver.contact_user.username }}</a></h2>
+        <h4>{{ outbox.sent_time }}</h4>
+    {% endfor %}
+    <h2>--------------------------</h2>
+{% endblock content %}

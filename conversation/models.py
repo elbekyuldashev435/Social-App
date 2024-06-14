@@ -21,10 +21,14 @@ class Messages(models.Model):
     sender = models.ForeignKey(Users, on_delete=models.DO_NOTHING, related_name='sent_messages')
     sent_time = models.DateTimeField(default=timezone.now)
     message = models.TextField()
+    audio = models.FileField(upload_to='messages/audios', blank=True, null=True)
+    video = models.FileField(upload_to='messages/videos', blank=True, null=True)
+    picture = models.FileField(upload_to='messages/pictures', blank=True, null=True)
+    docs = models.FileField(upload_to='messages/docs', blank=True, null=True)
     receiver = models.ForeignKey(Contacts, on_delete=models.DO_NOTHING, related_name='received_messages')
 
     class Meta:
         db_table = 'messages'
 
     def __str__(self):
-        return f"sender: {self.sender.username}"
+        return f"sender: {self.sender.username} --> receiver: {self.receiver.contact_user.username}"
