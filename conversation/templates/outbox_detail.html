@@ -7,7 +7,15 @@
     <img src="{{ message.receiver.contact_user.image.url }}" width="80px">
     <h2>{{ message.receiver.name}}</h2>
     <h2>------------------------------</h2>
-    <h3>You: {{ message.message }}</h3>
-    <h2>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</h2>
+    <h5>You: </h5>
+    {{ message.message }}
+    {% if message.picture %}
+        <img src="{{ message.picture.url }}" width="200px">
+    {% elif message.video %}
+        <video width="200" height="200" controls>
+            <source src="{{ message.video.url }}" type="video/mp4">
+        </video>
+    {% endif %}
+    <h2>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</h2>
     <h4>{{ message.sent_time }}</h4>
 {% endblock content %}

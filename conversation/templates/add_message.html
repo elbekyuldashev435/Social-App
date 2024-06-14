@@ -1,0 +1,13 @@
+
+
+{% extends 'base.html' %}
+<title>Send Message</title>
+{% block content %}
+    <h1>Send Message</h1>
+    <h2>To: {{ contact.name }}</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send message</button>
+    </form>
+{% endblock content %}

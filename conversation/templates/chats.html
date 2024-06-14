@@ -6,5 +6,5 @@
 {% block content %}
     <a href="{% url 'conversation:inbox' %}"><button>Inbox messages</button></a>
     <a href="{% url 'conversation:outbox' %}"><button>Outbox messages</button></a>
-    <a href="#"><button>Write message</button></a>
+    <a href="{% url 'conversation:contacts-list' %}"><button>Write message</button></a><br><br><br><br><br><br><br><br><br><br>
 {% endblock content %}

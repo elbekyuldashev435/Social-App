@@ -1,0 +1,24 @@
+
+
+{% extends 'base.html' %}
+<title>Contacts List</title>
+{% block content %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <h2>All Contacts</h2>
+    <a href="{% url 'conversation:inbox' %}"><button>Inbox messages</button></a> |
+    <a href="{% url 'conversation:outbox' %}"><button>Outbox messages</button></a> |
+    <a href="{% url 'conversation:add-contact' %}"><button>Add contact</button></a>
+    <h2>----------------------------</h2>
+    {% for contact in contacts %}
+        <img src="{{ contact.contact_user.image.url }}" width="80px">
+        <h3>{{ contact.name }}</h3>
+        <a href="{% url 'conversation:send-message' contact.pk %}"><button>Send message</button></a> | <a href="{% url 'conversation:delete-contact' contact.pk %}"><button>Delete contact</button></a>
+        <h2>----------------------------</h2>
+    {% endfor %}
+{% endblock content %}

@@ -1,0 +1,22 @@
+
+
+{% extends 'base.html' %}
+<title>Contact Delete</title>
+{% block content %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <h1>Contact delete</h1>
+    <img src="{{ contact.contact_user.image.url }}" width="80px">
+    <h3>{{ contact.name }}</h3>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Delete</button>
+    </form>
+
+{% endblock content %}

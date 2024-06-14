@@ -1,0 +1,20 @@
+
+
+{% extends 'base.html' %}
+<title>Inbox Detail</title>
+{% block content %}
+    <h2>------------------------------</h2>
+    <img src="{{ message.sender.image.url }}" width="80px">
+    <h2>{{ sender }}</h2>
+    <h2>------------------------------</h2>
+    {{ message.message }}<br><br>
+    {% if message.picture %}
+        <img src="{{ message.picture.url }}" width="200px">
+    {% elif message.video %}
+        <video width="200" height="200" controls>
+            <source src="{{ message.video.url }}" type="video/mp4">
+        </video>
+    {% endif %}
+    <h2>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</h2>
+    <h4>{{ message.sent_time }}</h4>
+{% endblock content %}

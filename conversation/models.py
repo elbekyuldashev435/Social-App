@@ -19,12 +19,12 @@ class Contacts(models.Model):
 
 class Messages(models.Model):
     sender = models.ForeignKey(Users, on_delete=models.DO_NOTHING, related_name='sent_messages')
+    message = models.TextField(null=True)
+    picture = models.ImageField(upload_to='messages/picture/', blank=True, null=True)
+    audio = models.FileField(upload_to='messages/audio/', blank=True, null=True)
+    video = models.FileField(upload_to='messages/video/', blank=True, null=True)
+    docs = models.FileField(upload_to='messages/docs/', blank=True, null=True)
     sent_time = models.DateTimeField(default=timezone.now)
-    message = models.TextField()
-    audio = models.FileField(upload_to='messages/audios', blank=True, null=True)
-    video = models.FileField(upload_to='messages/videos', blank=True, null=True)
-    picture = models.FileField(upload_to='messages/pictures', blank=True, null=True)
-    docs = models.FileField(upload_to='messages/docs', blank=True, null=True)
     receiver = models.ForeignKey(Contacts, on_delete=models.DO_NOTHING, related_name='received_messages')
 
     class Meta:

@@ -1,0 +1,19 @@
+
+
+{% extends 'base.html' %}
+<title>Add Contact</title>
+{% block content %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <h2>Add Contact</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Contact</button>
+    </form>
+{% endblock content %}

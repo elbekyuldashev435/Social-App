@@ -11,3 +11,10 @@
     {% block content %}
     {% endblock content %}
 </body>
+
+<h2>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</h2>
+<footer>
+    <a href="{% url 'products:posts-list' %}"><button>Home</button></a> |
+    <a href=""><button>Search</button></a> |
+    <a href="{% url 'products:add-post' %}"><button>+Add Post</button></a>
+</footer>
