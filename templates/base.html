@@ -2,7 +2,7 @@
 
 <title>Base</title>
 <header>
-    <a href=""><img src="{{ request.user.image.url }}" width="90px"></a><br>
+    <a href="{% url 'conversation:chat-view' %}"><img src="{{ request.user.image.url }}" width="90px"></a><br>
     <h4>{{ request.user.first_name }} {{ request.user.last_name }}</h4>
 <h2>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</h2>
 </header>

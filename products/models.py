@@ -23,3 +23,6 @@ class Posts(models.Model):
 
     class Meta:
         db_table = 'posts'
+
+    def __str__(self):
+        return f"author: {self.user.username} | title: {self.post_title}"
