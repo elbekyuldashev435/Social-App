@@ -16,6 +16,7 @@
         <a href="{% url 'conversation:inbox-detail' inbox.pk %}"><img src="{{ inbox.sender.image.url}}" width="80px"></a>
         <h2>From: <a href="">{{ inbox.sender.username }}</a></h2>
         <h4>{{ inbox.sent_time }}</h4>
+        <a href="{% url 'conversation:delete-inbox-message' inbox.pk%}"><button>Delete message</button></a>
     {% endfor %}
     <h2>--------------------------</h2>
 {% endblock content %}

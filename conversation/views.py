@@ -25,8 +25,6 @@ class OutboxView(View):
 class InboxView(View):
     def get(self, request):
         inboxes = Messages.objects.filter(receiver__contact_user=request.user).order_by('-sent_time')
-        for i in inboxes:
-            print(i)
         context = {
             'inboxes': inboxes,
         }
@@ -126,3 +124,33 @@ class AddMessageView(View):
                 'form': form
             }
         return render(request, 'add_message.html', context=context)
+
+
+class DeleteInboxMessageView(View):
+    def get(self, request, pk):
+        message = Messages.objects.get(pk=pk)
+        context = {
+            'message': message
+        }
+        return render(request, 'delete_inbox_message.html', context=context)
+
+    def post(self, request, pk):
+        message = Messages.objects.get(pk=pk)
+        message.delete()
+        messages.success(request, f'Message was deleted successfully.')
+        return redirect('conversation:inbox')
+
+
+class DeleteOutboxMessageView(View):
+    def get(self, request, pk):
+        message = Messages.objects.get(pk=pk)
+        context = {
+            'message': message
+        }
+        return render(request, 'delete_outbox_message.html', context=context)
+
+    def post(self, request, pk):
+        message = Messages.objects.get(pk=pk)
+        message.delete()
+        messages.success(request, f'Message was deleted successfully.')
+        return redirect('conversation:outbox')

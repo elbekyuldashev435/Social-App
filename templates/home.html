@@ -27,5 +27,6 @@
         <a href=""><button>Like</button></a>
         <a href=""><button>Comment</button></a>
         <a href=""><button>Save</button></a>
+        <a href="{% url 'products:share-post' post.pk %}"><button>Share</button></a>
     {% endfor %}
 {% endblock content %}

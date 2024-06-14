@@ -1,0 +1,16 @@
+
+
+{% extends 'base.html' %}
+<title>Delete Inbox Message</title>
+{% block content %}
+<h1>Delete Outbox Message</h1>
+<h2>----------------------------------------------</h2>
+<h2>To: {{ message.receiver.name }}</h2>
+<h4>Message: {{ message.message }}</h4>
+{{ message.sent_time }}<br><br><br>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Delete</button>
+</form>
+{% endblock content %}

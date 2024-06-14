@@ -1,0 +1,12 @@
+
+
+{% extends 'base.html' %}
+<title>Share Post</title>
+{% block content %}
+<h1>Share Post</h1>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Share</button>
+</form>
+{% endblock content %}

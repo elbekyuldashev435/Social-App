@@ -26,3 +26,16 @@ class Posts(models.Model):
 
     def __str__(self):
         return f"author: {self.user.username} | title: {self.post_title}"
+
+
+class Share(models.Model):
+    sender = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='sender_user')
+    post = models.ForeignKey(Posts, on_delete=models.CASCADE)
+    receiver = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='receiver_user')
+    sent_time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'share'
+
+    def __str__(self):
+        return f"sender: {self.sender.username} --> receiver: {self.receiver.username}"
