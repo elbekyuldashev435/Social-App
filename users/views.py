@@ -5,6 +5,9 @@ from django.shortcuts import render, redirect
 from . import forms
 from . import models
 from django.views import View
+from products.models import Posts
+from conversation.models import Contacts
+from django.contrib import messages
 
 
 # auth
@@ -21,7 +24,7 @@ class Registration(View):
         if registration_form.is_valid():
             print(f"{request.user} is valid")
             registration_form.save()
-            return redirect('login')
+            return redirect('users:login')
         else:
             context = {
                 'registration_form': registration_form
@@ -55,15 +58,17 @@ class Login(View):
 class Logout(View, LoginRequiredMixin):
     def get(self, request):
         logout(request)
-        return redirect('posts-list')
+        return redirect('products:posts-list')
 
 
 # profile
 class MyProfile(View):
     def get(self, request, pk):
         my_profile = models.Users.objects.get(pk=pk)
+        posts = Posts.objects.filter(user=my_profile)
         context = {
-            'my_profile': my_profile
+            'my_profile': my_profile,
+            'posts': posts
         }
         return render(request, 'my_profile.html', context=context)
 
@@ -71,8 +76,10 @@ class MyProfile(View):
 class Profile(View):
     def get(self, request, pk):
         profile = models.Users.objects.get(pk=pk)
+        posts = Posts.objects.filter(user=profile)
         context = {
-            'profile': profile
+            'profile': profile,
+            'posts': posts
         }
         return render(request, 'profile.html', context=context)
 
@@ -100,3 +107,12 @@ class EditProfile(View):
                 'edit_profile_form': edit_profile_form
             }
             return render(request, 'edit_profile.html', context=context)
+
+
+class AddContactView(View):
+    def post(self, request, pk):
+        user = models.Users.objects.get(pk=pk)
+        if not Contacts.objects.filter(main_user=request.user, contact_user__pk=pk):
+            Contacts.objects.create(main_user=request.user, contact_user=user)
+            messages.success(request, f'Contact "{user.username}" was added successfully.')
+        return redirect('users:profile', pk=pk)

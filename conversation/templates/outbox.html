@@ -9,6 +9,7 @@
         {% endfor %}
     {% endif %}
     <h2>Sent Messages</h2>
+    <a href="{% url 'conversation:contacts-list' %}"><button>Send Message</button></a>
     {% for outbox in outboxes %}
         <h2>--------------------------</h2>
         <a href="{% url 'conversation:outbox-detail' outbox.pk%}"><img src="{{ outbox.receiver.contact_user.image.url }}" width="80px"></a>

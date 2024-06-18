@@ -1,0 +1,22 @@
+
+
+{% extends 'base.html' %}
+<title>Received Posts</title>
+{% block content %}
+    {% for post in posts %}
+        {% if post %}
+            <a href=""><img src="{{ post.sender.image.url}}" width="80px"></a>
+            <h3>To: {{ post.sender.username }}</h3>
+            {% if post.post.post_image %}
+                <a href=""><img src="{{ post.post.post_image.url }}" width="200px"></a>
+            {% elif post.post.post_video %}
+                <video>
+                    <source src="{{ post.post.post_video.url }}" type="video/mp4" width="200px">
+                </video>
+            {% endif %}
+            <h4>{{ post.sent_time }}</h4>
+        {% else %}
+            <h2>You have no received posts</h2>
+        {% endif %}
+    {% endfor %}
+{% endblock content %}

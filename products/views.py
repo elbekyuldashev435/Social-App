@@ -6,13 +6,14 @@ from .models import Posts, Share, Save
 from .forms import AddPostForm, ShareForm
 from conversation.models import Contacts
 # Create your views here.
+from random import sample
 
 
 class PostsListView(View):
     def get(self, request):
-        posts = Posts.objects.all()
+        posts = Posts.objects.all().order_by('?')
         context = {
-            'posts': posts
+            'posts': posts,
         }
         return render(request, 'home.html', context)
 
@@ -76,7 +77,7 @@ def choice_view(request):
 
 class OutboxShareView(View):
     def get(self, request):
-        posts = Share.objects.filter(sender=request.user)
+        posts = Share.objects.filter(sender=request.user).order_by('-sent_time')
         for i in posts:
             print(i.post.post_image)
         context = {
@@ -85,7 +86,16 @@ class OutboxShareView(View):
         return render(request, 'outbox_share.html', context)
 
 
-class SaveView(View):
+class InboxShareView(View):
+    def get(self, request):
+        posts = Share.objects.filter(receiver=request.user).order_by('-sent_time')
+        context = {
+            'posts': posts
+        }
+        return render(request, 'inbox_share.html', context=context)
+
+
+class SavePostView(View):
     def get(self, request):
         saved_items = Save.objects.filter(user=request.user).order_by('-saved_time')
         context = {

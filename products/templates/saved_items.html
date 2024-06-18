@@ -4,6 +4,24 @@
 <title>Saved posts</title>
 {% block content %}
     {% for item in saved_items %}
-       {{ item.post_title }}
+    <h2>--------------------------------------------</h2>
+        <a href=""><img src="{{ item.post.user.image.url }}" width="80px"></a> {{ item.post.user.username }}<br><br>
+        {% if item.post.post_image %}
+            <a href="{% url 'products:post-detail' item.post.pk %}"><img src="{{ item.post.post_image.url }}" width="300px"></a>
+        {% elif item.post.post_video %}
+            <video>
+                <a href="{% url 'products:post-detail' item.post.pk %}"><source src="{{ item.post.post_video.url }}" type="video/mp4"></a>
+            </video>
+        {% endif %}
+        <h3>{{ item.post.post_title }}</h3>
+        {% if user.is_authenticated %}
+            <a href=""><button>Like</button></a>
+            <a href=""><button>Comment</button></a>
+            <a href="{% url 'products:share-post' item.post.pk %}"><button>Share</button></a><br><br>
+            <form action="{% url 'products:save-post' item.post.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Save</button>
+            </form>
+        {% endif %}
     {% endfor %}
 {% endblock content %}

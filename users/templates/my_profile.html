@@ -3,13 +3,26 @@
 {% block content %}
     <h1>My profile</h1>
     {% if my_profile.image %}
-        <img src="{{ my_profile.image }}" height="50px">
+        <img src="{{ my_profile.image.url }}" height="80px">
     {% endif %}
 
     <h3>Username: {{ my_profile.username }}</h3>
     <p>Bio: {{ my_profile.bio }}</p>
 
     <br>
-    <a href="{% url 'edit_my_profile' my_profile.pk %}">Edit</a>
+    <a href=""><button>Edit profile</button></a>
+    <a href="{% url 'users:logout' %}"><button>Logout</button></a><br><br>
+    <h2>Posts</h2>
+    <h2>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</h2>
+    {% for post in posts %}
+        {% if post.post_image %}
+            <a href="{% url 'products:post-detail' post.pk %}"><img src="{{ post.post_image.url }}"></a>
+        {% elif post.post_video %}
+            <video>
+                <a href="{% url 'products:post-detail' post.pk %}"><source src="{{ post.post_video.url }}" type="video/mp4"></a>
+            </video>
+        {% endif %}
+        <h3>{{ post.post_title }}</h3>
+    {% endfor %}
 
 {% endblock content %}

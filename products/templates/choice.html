@@ -5,5 +5,5 @@
 {% block content %}
 <h1>Choice</h1>
     <a href="{% url 'products:outbox-share' %}"><button>Sent posts</button></a> |
-    <a href=""><button>Received posts</button></a>
+    <a href="{% url 'products:inbox-share' %}"><button>Received posts</button></a>
 {% endblock content %}

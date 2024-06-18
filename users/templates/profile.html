@@ -1,11 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
     {% if profile.image %}
-        <img src="{{ profile.image }}" height="50px">
+        <img src="{{ profile.image.url }}" height="80px">
     {% endif %}
 
     <h2>Username: {{ profile.username }}</h2>
-    <p>Bio: {{ profile.bio }}</p>
-
+    <p>Bio: {{ profile.bio }}</p><br><br>
+    <form action="{% url 'users:add-contact' profile.pk %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Add contact</button>
+    </form>
+<h2>Posts</h2>
+<h2>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</h2>
+    {% for post in posts %}
+    <h2>--------------------------------------------</h2>
+        {% if post.post_image %}
+            <a href="{% url 'products:post-detail' post.pk %}"><img src="{{ post.post_image.url }}"></a>
+        {% elif post.post_video %}
+            <video width="640" height="480" controls>
+                <a href="{% url 'products:post-detail' post.pk %}"><source src="{{ post.post_video.url }}" type="video/mp4"></a>
+            </video>
+        {% endif %}
+        <h3>{{ post.post_title }}</h3>
+    {% endfor %}
 {% endblock content %}

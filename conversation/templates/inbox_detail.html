@@ -4,8 +4,8 @@
 <title>Inbox Detail</title>
 {% block content %}
     <h2>------------------------------</h2>
-    <img src="{{ message.sender.image.url }}" width="80px">
-    <h2>{{ sender }}</h2>
+    <a href="{% url 'users:profile' message.sender.pk %}"><img src="{{ message.sender.image.url }}" width="80px"></a>
+    <h2>{{ message.sender.username }}</h2>
     <h2>------------------------------</h2>
     {{ message.message }}<br><br>
     {% if message.picture %}

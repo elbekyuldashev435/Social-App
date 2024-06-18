@@ -9,7 +9,7 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = models.Users
-        fields = ['username', 'bio', 'password']
+        fields = ['username', 'bio', 'password', 'image', 'first_name', 'last_name']
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -24,4 +24,4 @@ class EditProfileForm(ModelForm):
 
     class Meta:
         model = models.Users
-        fields = ['username', 'bio', 'password', 'image']
+        fields = ['username', 'bio', 'password', 'image', 'first_name', 'last_name']

@@ -12,9 +12,15 @@
     <h2>------------------</h2>
     {% for post in posts %}
         <h2>--------------------------------------------</h2>
-        <a href="{% url 'profile' post.user.pk %}"><img src="{{ post.user.image.url }}" width="30px"></a> {{ post.user.username }}<br><br><br>
+        {% if post.user == request.user %}
+            <a href="{% url 'users:my_profile' request.user.pk %}"><img src="{{ post.user.image.url }}" width="30px"></a> {{ post.user.username }}<br><br><br>
+        {% else %}
+            <a href="{% url 'users:profile' post.user.pk %}"><img src="{{ post.user.image.url }}" width="30px"></a> {{ post.user.username }}<br><br><br>
+        {% endif %}
+
+
         {% if post.post_image %}
-            <a href="{% url 'products:post-detail' post.pk %}"><img src="{{ post.post_image.url }}"></a>
+            <a href="{% url 'products:post-detail' post.pk %}"><img src="{{ post.post_image.url }}" width="300px"></a>
             <h3>{{ post.post_title }}</h3>
         {% elif post.post_video %}
             <video width="640" height="480" controls>
@@ -23,11 +29,16 @@
         {% else %}
             <h3><a href="">{{ post.post_title }}</a></h3>
         {% endif %}
+
+
         {% if user.is_authenticated %}
             <a href=""><button>Like</button></a>
             <a href=""><button>Comment</button></a>
-            <a href=""><button>Save</button></a>
-            <a href="{% url 'products:share-post' post.pk %}"><button>Share</button></a>
+            <a href="{% url 'products:share-post' post.pk %}"><button>Share</button></a><br><br>
+        <form action="{% url 'products:save-post' post.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Save</button>
+        </form>
         {% endif %}
     {% endfor %}
 {% endblock content %}

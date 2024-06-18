@@ -4,7 +4,11 @@
 <title>Send Message</title>
 {% block content %}
     <h1>Send Message</h1>
-    <h2>To: {{ contact.name }}</h2>
+    {% if contact.name %}
+        <h2>To: {{ contact.name }}</h2>
+    {% else %}
+        <h2>To: {{ contact.contact_user.username  }}</h2>
+    {% endif %}
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}

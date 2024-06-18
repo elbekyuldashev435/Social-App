@@ -43,9 +43,7 @@ class OutboxDetailView(View):
 class InboxDetailView(View):
     def get(self, request, pk):
         message = Messages.objects.get(pk=pk)
-        sender = Contacts.objects.get(contact_user=message.sender)
         context = {
-            'sender': sender.name,
             'message': message
         }
         return render(request, 'inbox_detail.html', context=context)
