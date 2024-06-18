@@ -12,7 +12,7 @@
     <h2>------------------</h2>
     {% for post in posts %}
         <h2>--------------------------------------------</h2>
-        <a href=""><img src="{{ post.user.image.url }}" width="30px"></a> {{ post.user.username }}<br><br><br>
+        <a href="{% url 'profile' post.user.pk %}"><img src="{{ post.user.image.url }}" width="30px"></a> {{ post.user.username }}<br><br><br>
         {% if post.post_image %}
             <a href="{% url 'products:post-detail' post.pk %}"><img src="{{ post.post_image.url }}"></a>
             <h3>{{ post.post_title }}</h3>
