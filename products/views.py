@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
 
-from .models import Posts, Share
+from .models import Posts, Share, Save
 from .forms import AddPostForm, ShareForm
+from conversation.models import Contacts
 # Create your views here.
 
 
@@ -14,6 +15,15 @@ class PostsListView(View):
             'posts': posts
         }
         return render(request, 'home.html', context)
+
+
+class PostDetailView(View):
+    def get(self, request, pk):
+        post = Posts.objects.get(pk=pk)
+        context = {
+            'post': post
+        }
+        return render(request, 'post_detail.html', context=context)
 
 
 class AddPostView(View):
@@ -52,6 +62,7 @@ class SharePostView(View):
             post = form.save(commit=False)
             post.sender = request.user
             post.post = Posts.objects.get(pk=pk)
+            post.receiver = Contacts.objects.get(pk=pk)
             post.save()
             messages.success(request, 'Your post was shared successfully.')
             return redirect('products:posts-list')
@@ -72,3 +83,18 @@ class OutboxShareView(View):
             'posts': posts
         }
         return render(request, 'outbox_share.html', context)
+
+
+class SaveView(View):
+    def get(self, request):
+        saved_items = Save.objects.filter(user=request.user).order_by('-saved_time')
+        context = {
+            'saved_items': saved_items
+        }
+        return render(request, 'saved_items.html', context=context)
+
+    def post(self, request, pk):
+        post = Posts.objects.get(pk=pk)
+        if not Save.objects.filter(post=post, user=request.user).exists():
+            Save.objects.create(user=request.user, post=post)
+        return redirect('products:posts-list')

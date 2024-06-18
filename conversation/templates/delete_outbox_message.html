@@ -13,4 +13,5 @@
     {{ form.as_p }}
     <button type="submit">Delete</button>
 </form>
+<a href="{% url 'conversation:outbox' %}"><button>Back</button></a>
 {% endblock content %}

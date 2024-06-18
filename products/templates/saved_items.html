@@ -1,0 +1,9 @@
+
+
+{% extends 'base.html' %}
+<title>Saved posts</title>
+{% block content %}
+    {% for item in saved_items %}
+       {{ item.post_title }}
+    {% endfor %}
+{% endblock content %}

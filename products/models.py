@@ -39,3 +39,15 @@ class Share(models.Model):
 
     def __str__(self):
         return f"sender: {self.sender.username} --> receiver: {self.receiver.username}"
+
+
+class Save(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    post = models.ForeignKey(Posts, on_delete=models.CASCADE)
+    saved_time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'save'
+
+    def __str__(self):
+        return f"user: {self.user.username} --> post: {self.post.post_title}"
