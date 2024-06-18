@@ -43,7 +43,7 @@ class Login(View):
         if login_form.is_valid():
             account = login_form.get_user()
             login(request, account)
-            return redirect('ListProducts')
+            return redirect('products:posts-list')
 
         else:
             context = {
@@ -55,7 +55,7 @@ class Login(View):
 class Logout(View, LoginRequiredMixin):
     def get(self, request):
         logout(request)
-        return redirect('registration')
+        return redirect('posts-list')
 
 
 # profile
@@ -68,13 +68,13 @@ class MyProfile(View):
         return render(request, 'my_profile.html', context=context)
 
 
-# class Profile(View):
-#     def get(self, request, pk):
-#         profile = models.Accounts.objects.get(pk=pk)
-#         context = {
-#             'profile': profile
-#         }
-#         return render(request, 'profile.html', context=context)
+class Profile(View):
+    def get(self, request, pk):
+        profile = models.Users.objects.get(pk=pk)
+        context = {
+            'profile': profile
+        }
+        return render(request, 'profile.html', context=context)
 
 
 class EditProfile(View):
@@ -94,7 +94,7 @@ class EditProfile(View):
             password = edit_profile_form.cleaned_data.get('password')
             user.set_password(password)
             user.save()
-            return redirect('my_profile', pk=profile.id)
+            return redirect('my_profile', pk=profile.pk)
         else:
             context = {
                 'edit_profile_form': edit_profile_form

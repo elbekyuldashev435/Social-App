@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 
-{% block title %}
+{% block content %}
+    <h1>My profile</h1>
+    {% if my_profile.image %}
+        <img src="{{ my_profile.image }}" height="50px">
+    {% endif %}
 
-{% endblock title %}
+    <h3>Username: {{ my_profile.username }}</h3>
+    <p>Bio: {{ my_profile.bio }}</p>
+
+    <br>
+    <a href="{% url 'edit_my_profile' my_profile.pk %}">Edit</a>
+
+{% endblock content %}
