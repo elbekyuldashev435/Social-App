@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.contrib import messages
 
@@ -108,3 +108,11 @@ class SavePostView(View):
         if not Save.objects.filter(post=post, user=request.user).exists():
             Save.objects.create(user=request.user, post=post)
         return redirect('products:posts-list')
+
+
+class DeleteSaveView(View):
+    def post(self, request, pk):
+        post = get_object_or_404(Save, post__pk=pk)
+        post.delete()
+        messages.success(request, f'Post "{post.post.post_title}" was deleted successfully.')
+        return redirect('products:saved-posts')

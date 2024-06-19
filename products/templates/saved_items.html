@@ -18,9 +18,9 @@
             <a href=""><button>Like</button></a>
             <a href=""><button>Comment</button></a>
             <a href="{% url 'products:share-post' item.post.pk %}"><button>Share</button></a><br><br>
-            <form action="{% url 'products:save-post' item.post.pk %}" method="post">
+            <form action="{% url 'products:delete-saved' item.post.pk %}" method="post">
                 {% csrf_token %}
-                <button type="submit">Save</button>
+                <button type="submit">Delete</button>
             </form>
         {% endif %}
     {% endfor %}

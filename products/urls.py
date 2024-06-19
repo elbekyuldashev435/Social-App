@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import PostsListView, AddPostView, SharePostView, choice_view, OutboxShareView, InboxShareView, PostDetailView
-from .views import SavePostView
+from .views import SavePostView, DeleteSaveView
 
 app_name = 'products'
 urlpatterns = [
@@ -14,5 +14,6 @@ urlpatterns = [
     path('inbox-share/', InboxShareView.as_view(), name='inbox-share'),
 
     path('saved-posts/', SavePostView.as_view(), name='saved-posts'),
-    path('save-post/<int:pk>/', SavePostView.as_view(), name='save-post')
+    path('save-post/<int:pk>/', SavePostView.as_view(), name='save-post'),
+    path('delete-saved/<int:pk>/', DeleteSaveView.as_view(), name='delete-saved')
 ]
