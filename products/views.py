@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.contrib import messages
 
-from .models import Posts, Share, Save
-from .forms import AddPostForm, ShareForm
+from .models import Posts, Share, Save, Comment
+from .forms import AddPostForm, ShareForm, CommentForm
 from conversation.models import Contacts
 # Create your views here.
 from random import sample
@@ -21,8 +21,11 @@ class PostsListView(View):
 class PostDetailView(View):
     def get(self, request, pk):
         post = Posts.objects.get(pk=pk)
+        comment = Comment.objects.filter(post_id=pk)
+
         context = {
-            'post': post
+            'post': post,
+            'comment': comment,
         }
         return render(request, 'post_detail.html', context=context)
 
@@ -48,7 +51,7 @@ class AddPostView(View):
 
 
 class SharePostView(View):
-    def get(self, request,  *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         pk = kwargs.get('pk')
         form = ShareForm()
         context = {
@@ -110,9 +113,58 @@ class SavePostView(View):
         return redirect('products:posts-list')
 
 
+<<<<<<< HEAD
 class DeleteSaveView(View):
     def post(self, request, pk):
         post = get_object_or_404(Save, post__pk=pk)
         post.delete()
         messages.success(request, f'Post "{post.post.post_title}" was deleted successfully.')
         return redirect('products:saved-posts')
+=======
+class AddComment(View):
+    def get(self, request, pk):
+        post = Posts.objects.get(pk=pk)
+        addcomment_form = CommentForm()
+        context = {
+            'post': post,
+            'addcomment_form': addcomment_form
+        }
+        return render(request, 'comment.html', context=context)
+
+    def post(self, request, pk):
+        post = Posts.objects.get(pk=pk)
+        addcomment_form = CommentForm(request.POST)
+        if addcomment_form.is_valid():
+            Comment.objects.create(
+                comment=addcomment_form.cleaned_data['comment'],
+                post=post,
+                user=request.user,
+                star_given=addcomment_form.cleaned_data['star_given']
+            )
+            return redirect('products:post-detail', pk=pk)
+        context = {
+            'post': post,
+            'addcomment_form': addcomment_form
+        }
+        return render(request, 'comment.html', context=context)
+
+
+from django.shortcuts import get_object_or_404, redirect
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+from .models import Posts
+
+
+@login_required
+@require_POST
+def like_post(request, pk):
+    post = get_object_or_404(Posts, pk=pk)
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+        liked = False
+    else:
+        post.likes.add(request.user)
+        liked = True
+    return JsonResponse({'liked': liked, 'total_likes': post.total_likes})
+>>>>>>> be48ec084c74d7442947570ffd27401e1a605e65
